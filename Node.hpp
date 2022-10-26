@@ -10,7 +10,7 @@ Hunter College
 
 #include <iostream>
 
-template<typename ItemType>
+template<typename T>
 class Node {
 
     public:
@@ -24,34 +24,35 @@ class Node {
             @param item - the item to be constructed
             @param next_node - the next node to point to
          */
-        Node(const ItemType& item, Node<ItemType> *next_node = nullptr);
+        Node(const T& item, Node<T> *next_node = nullptr);
 
         /*
             Setter function for node item
             @param anItem - the item to be set in item_
         */
-        void setItem(const ItemType &anItem);
+        void setItem(const T &anItem);
 
         /*
             Setter function for pointer to next node in chain
             @param nextNodePtr - the nextNodePtr to be set in next_
         */
-        void setNext(Node<ItemType> *nextNodePtr);
+        void setNext(Node<T> *nextNodePtr);
 
         /*
             @return returns the value for item_
         */
-        ItemType getItem() const;
+        T getItem() const;
+
 
         /*
             @return returns the value for next_
         */
-        Node<ItemType> *getNext() const;
+        Node<T> *getNext() const;
 
 
     private:
-        ItemType item_;
-        Node<ItemType> *next_;
+        T item_;
+        Node<T> *next_;
 };
 
 #include "Node.cpp"

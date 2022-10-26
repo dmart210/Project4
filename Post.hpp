@@ -31,7 +31,7 @@ class Post{
         void setUsername(const string& _username);
         void setBody(const string& _body);
         void setTitle(const string& _title);
-        virtual void displayPost() const;
+        virtual void displayPost() = 0;
         Post(string _title, string _body, string _username){
             title = _title;
             body  = _body;

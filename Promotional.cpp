@@ -29,7 +29,7 @@ bool Promotional::setLink(string& _link){
  * @post: method that prints out the the title body nd the time it was created
  * 
  */
-virtual void Promotional::displayPost() const{
+void Promotional::displayPost(){
     string x = Post::getTitle();
     string y = Post::getBody();
     string z = getLink();

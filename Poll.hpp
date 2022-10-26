@@ -28,5 +28,5 @@ class Poll : public Post{
         void changePollOption(int& new_poll_option, int& choice_num);
         void getPollOptions()const ;
         int getPollVotes(int index_of_option)const ;
-        virtual void displayPost()const;
+        void displayPost()override;
 };

@@ -8,16 +8,17 @@
 #include "Network.hpp"
 #include "Post.hpp"
 #include "LinkedList.hpp"
+#include "Node.hpp"
 #include <iostream>
 #include <vector>
 #include <ctime>
 
 using namespace std;
-class Account : public LinkedList{
+class Account{
     private:
         string username; //username of account
         string password; //password of account
-        Node<Post>* all_posts; //all__posts contained in Account 
+        LinkedList<Post*> all_posts; //all__posts contained in Account 
         time_t current_time; // time_t object that gets the time
         Network<Account>* account_in_network;//pointer to the network 
         vector<string> usernames_of_following; //vector of all usernames the Account follows
@@ -74,7 +75,7 @@ class Account : public LinkedList{
          * @param: two const reference which are the title and body of the post thats going to be created
          * @post: it will add the post to the all_posts vector, and as well add it to the network feed if the account is in the feed 
          */
-        bool addPost(Node<Post>* post); // didnt pass
+        bool addPost(const Post* post); // didnt pass
         /**
          * @post: view all the posts in the Account
          */

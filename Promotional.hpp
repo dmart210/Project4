@@ -20,6 +20,6 @@ class Promotional:public Post{
         }
         string getLink()const;
         bool setLink(string& _link);
-        virtual void displayPost()const;
+        void displayPost() override;
 
 };

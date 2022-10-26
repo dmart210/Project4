@@ -14,9 +14,9 @@ class General: public Post{
     public:  
         bool reactToPost(const Reactions& reaction);
         void getReactions() const;
-        virtual void displayPost()const ;
-        General(string _title, string _body, string& _username): Post (_title, _body, _username){
-            Post person(_title,_body, _username);
+        void displayPost()override ;
+        General(string _title, string _body, string _username): Post (_title, _body, _username){
+            // Post person(_title,_body, _username);
             time(&current_time);
         }
 };

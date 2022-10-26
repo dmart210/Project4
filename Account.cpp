@@ -65,11 +65,8 @@ void Account::getTimeStamp() const{
  * @return: Returns true otherwise and creates a post and adds it to the string vector
  */
 
-bool Account::addPost(const string& title,  const string& body ){
-    if (title == "" || body == "") return false;
-    Post post(title,body,getUsername());
-    all_posts.push_back(post);
-    if (account_in_network != nullptr) account_in_network->addToFeed(post);
+bool Account::addPost(const Post* post){
+    
     return true;
 }
 
@@ -77,11 +74,7 @@ bool Account::addPost(const string& title,  const string& body ){
  * @note: A for loop that prints out the posts in the accounts
  */
 
-void Account::viewPosts() const {
-	unsigned int vecSize = all_posts.size();
-	for (unsigned int i = 0; i < vecSize; i++){
-        all_posts[i].displayPost();
-	}
+void Account::viewPosts() const {;
 }
 /**
  * 

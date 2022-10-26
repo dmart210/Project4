@@ -16,12 +16,12 @@
 using namespace std;
 
 template <class T>
-class Network : public LinkedList<T>{
+class Network{
     private:
         static const int DEFAULT_CAPACITY = 200; //default capacity of how many items can be in a network
         const T* temp_items[DEFAULT_CAPACITY]; // temp_items being the amount of accounts in the network. Which are all pointers to the Accounts
         int item_count; //keep count of the amount of items being removed or added to the network
-        Node<Post>* feed; //feed of the accounts
+        LinkedList<Post*> feed; //feed of the accounts post
         int getIndexOf(const T* _username); // private method that gets the index of where in the temp_items the _username is found if it is there.
     public:
         void printVector(const T& vec);
@@ -82,6 +82,8 @@ class Network : public LinkedList<T>{
          * 
          */
         bool addToFeed (Post& post_added_to_feed);
+
+        int removeIfContains(string& phrase_sensitive);
 
 };
 //since its a template, the Network cpp is included at the bottom

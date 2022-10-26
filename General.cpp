@@ -27,7 +27,7 @@ void General::getReactions()const{
  * @post: diplays the title, the body, the time the post was created, and as well as the reaction 
  * 
  */
-virtual void General::displayPost()const {
+void General::displayPost(){
     string x = getTitle();
     string z = getBody();
 

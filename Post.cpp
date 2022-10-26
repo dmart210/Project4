@@ -65,7 +65,7 @@ void Post::setUsername(const string& _username){
  *          the time it was created(which was casted from integer to string), and the body of the post.  
  * 
  */
-virtual void Post::displayPost() const{
+void Post::displayPost() {
     string post = this->title + " posted at " + asctime(localtime(&current_time))  + this->body + "\n";
     cout << post;
 }

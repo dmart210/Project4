@@ -55,7 +55,7 @@ int Poll::getPollVotes(int index_of_option)const{
  * 
  * @post: a method that prints out the body, title, and time of the post. As well as printing the options and how many votes it has
  */
-virtual void Poll::displayPost()const{
+void Poll::displayPost(){
     char * time_pointer =asctime(localtime(&current_time)) ;
     string date_formated;
     //A for loop to go through the char pointer and to remove the \n that is attached to the asctime() function. The purpose to is make the date look more appealing

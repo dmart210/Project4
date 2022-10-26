@@ -19,6 +19,7 @@ class LinkedList {
     public:
         /* Default constructor*/
         LinkedList();
+        LinkedList(LinkedList<T>& list);
 
 
         /* Destructor */
@@ -46,7 +47,7 @@ class LinkedList {
         **/
         bool remove(const int &position);
 
-
+        void displayList();
 
 
         /* @return  : the size of the list */
@@ -77,6 +78,9 @@ class LinkedList {
         **/
         int getIndexOf(const T &item) const;
 
+        void reverseCopy(LinkedList<T>& LinkList);
+        
+        bool moveItemToTop(Node<T>*& move_to_top);
 
 
 

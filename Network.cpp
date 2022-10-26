@@ -10,6 +10,7 @@
 #include <fstream>
 #include <vector>
 #include "Network.hpp"
+#include <sstream>
 // #include "Post.hpp"
 using namespace std;
 /**
@@ -90,24 +91,35 @@ bool Network<T>::containsAccount(const T* contains_item){
  * @param: file type
  * @post: will go through the file, find the username and password, and then create Accounts using the usernames and passwords found. 
  */
-template<class T>
-void Network<T>::populateNetwork(const string fileName){
-    fstream file(fileName);
-    if(file.is_open()){
-        while(file.good()){
-            string username, password;
-            file >> username;
-            file >> password;
-            if (password == ";" || username == ";") break;
-            else if(password == "" || username == ""){
-                cout << "Improper Format";
-                break;
-            }
-            T* new_account = new T(username,password);
-            addAccount(new_account);
+template <typename T>
+void Network<T>::populateNetwork(const string input){
+    std::fstream fin;
+    fin.open(input, std::ios::in);
+    std::string usr = "";
+    std::string pswd = "";
+    std::string line;
+    std::string word;
+    while (std::getline(fin, line)){
+        if(line == ";") {
+            break;
         }
+        std::stringstream s(line);
+        s >> usr;
+        s >> pswd;
+        if(usr == "" || pswd == "") {
+            std::cout << "Improper format" << std::endl;
+            break;
+        }
+        T* new_entry = new T(usr,pswd);
+        bool is_added = addAccount(new_entry);
+        if(!is_added) {
+            std::cout << "Error when adding account" << std::endl;
+            break;
+        }
+        usr = "";
+        pswd = "";
     }
-    file.close();
+    fin.close();
 }
 /**
  * @param: const reference of a different network
@@ -145,7 +157,7 @@ bool Network<T>::authenticateFollow(T& _account, const string username){
  */
 template<class T>
 bool Network<T>::addToFeed(Post& account_post){
-    feed.push_back(account_post);
+    // feed.push_back(account_post);
     return true;
 }
 /**
@@ -165,4 +177,9 @@ int Network<T>::getIndexOf(const T* _username){
         else search_index++;
     }
     return result;
+}
+
+template<class T>
+int Network<T>::removeIfContains(string& phrase_sensitive){
+    return -1;
 }

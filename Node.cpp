@@ -50,6 +50,7 @@ template <class ItemType>
 ItemType Node<ItemType>::getItem() const { return item_; }
 
 
+
 /*
     @return returns the value for next_
 */
