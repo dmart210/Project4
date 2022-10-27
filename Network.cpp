@@ -158,8 +158,7 @@ bool Network<T>::authenticateFollow(T& _account, const string username){
  * @return: will return true if it was able to add the post to the feed.
  */
 template<class T>
-bool Network<T>::addToFeed(const Post* &account_post){
-    feed.insert(account_post,0);
+bool Network<T>::addToFeed(const Post* account_post){
     return true;
 }
 /**

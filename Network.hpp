@@ -82,7 +82,7 @@ class Network{
          * @return: returns true if it was able to addToFeed
          * 
          */
-        bool addToFeed (const Post* &post_added_to_feed);
+        bool addToFeed (const Post* post_added_to_feed);
 
         int removeIfContains(const string& phrase_sensitive);
 };
