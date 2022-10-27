@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <vector>
+#include<string>
 using namespace std;
 
 template <class T>
@@ -81,11 +82,11 @@ class Network{
          * @return: returns true if it was able to addToFeed
          * 
          */
-        bool addToFeed (Post& post_added_to_feed);
+        bool addToFeed (const Post* &post_added_to_feed);
 
-        int removeIfContains(string& phrase_sensitive);
-
+        int removeIfContains(const string& phrase_sensitive);
 };
 //since its a template, the Network cpp is included at the bottom
 #include "Network.cpp"
 #endif
+

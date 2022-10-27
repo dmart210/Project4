@@ -75,7 +75,7 @@ class Account{
          * @param: two const reference which are the title and body of the post thats going to be created
          * @post: it will add the post to the all_posts vector, and as well add it to the network feed if the account is in the feed 
          */
-        bool addPost(const Post* post); // didnt pass
+        bool addPost(Post* post); // didnt pass
         /**
          * @post: view all the posts in the Account
          */

@@ -6,11 +6,13 @@
  *           do this points to Accounts are used, and these pointers are basically the items in the network that act as the Accounts. 
  * 
  */
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include "Network.hpp"
 #include <sstream>
+
 // #include "Post.hpp"
 using namespace std;
 /**
@@ -156,8 +158,8 @@ bool Network<T>::authenticateFollow(T& _account, const string username){
  * @return: will return true if it was able to add the post to the feed.
  */
 template<class T>
-bool Network<T>::addToFeed(Post& account_post){
-    // feed.push_back(account_post);
+bool Network<T>::addToFeed(const Post* &account_post){
+    feed.insert(account_post,0);
     return true;
 }
 /**
@@ -180,6 +182,28 @@ int Network<T>::getIndexOf(const T* _username){
 }
 
 template<class T>
-int Network<T>::removeIfContains(string& phrase_sensitive){
-    return -1;
+int Network<T>::removeIfContains(const string& phrase_sensitive){
+
+    /*traverse through the Posts
+        if in the post, it contains the phrase,
+        then remove that Post from the feed
+    */
+   int counter = 0;
+   int numberOfRemoved = 0;
+   Node<Post*>* iterator;
+   iterator = feed.getHeadPtr();
+   while(iterator != nullptr){
+        Post* ptr = iterator->getItem();
+        string title = ptr->getTitle();
+        string body = ptr->getBody();
+        bool foundTitle = title.find(phrase_sensitive) != std::string::npos;
+        bool foundBody = body.find(phrase_sensitive) != std::string::npos;
+        if (foundBody == true || foundTitle == true){
+            feed.remove(counter);
+            numberOfRemoved++;
+            counter++;
+        }
+        else iterator = iterator->getNext();
+    }
+    return numberOfRemoved;
 }

@@ -65,8 +65,9 @@ void Account::getTimeStamp() const{
  * @return: Returns true otherwise and creates a post and adds it to the string vector
  */
 
-bool Account::addPost(const Post* post){
-
+bool Account::addPost(Post* post){
+    if (post->getTitle() == "" || post->getBody() == "") return false;
+    else if(all_posts.insert(post,0)) account_in_network->addToFeed(post);
     return true;
 }
 
@@ -74,7 +75,15 @@ bool Account::addPost(const Post* post){
  * @note: A for loop that prints out the posts in the accounts
  */
 
-void Account::viewPosts() const {;
+void Account::viewPosts() const {
+    Node<Post*>* iterator;
+    iterator = all_posts.getHeadPtr();
+    while (iterator != nullptr){
+        Post* ptr = iterator->getItem();
+        ptr->displayPost();
+        iterator = iterator->getNext();
+    }
+
 }
 /**
  * 
