@@ -107,3 +107,28 @@ vector<string> Account::viewFollowing() const{
     cout << usernames_of_following.size() << endl;
     return usernames_of_following;
 }
+
+void Account::updatePost(Post* post_ptr,const string& new_title,const  string& new_body){
+    Post* new_ptr = post_ptr;
+    new_ptr->setBody(new_body);
+    new_ptr->setTitle(new_title);
+    all_posts.remove(all_posts.getIndexOf(post_ptr));
+    LinkedList<Post*> new_list = account_in_network->getFeed();
+    new_list.remove(new_list.getIndexOf(post_ptr));
+    all_posts.insert(new_ptr,0);
+}   
+
+bool Account::removePost(Post* post_ptr){
+    LinkedList<Post*> new_list = account_in_network->getFeed();
+    Node<Post*>* iterator;
+    iterator = all_posts.getHeadPtr();
+    while (iterator != nullptr){
+        if (iterator->getItem() == post_ptr){
+            all_posts.remove(all_posts.getIndexOf(post_ptr));
+            new_list.remove(new_list.getIndexOf(post_ptr));
+            return true;
+        }
+        else iterator = iterator->getNext();
+    }
+    return false;
+}

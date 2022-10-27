@@ -12,6 +12,7 @@
 #include <vector>
 #include "Network.hpp"
 #include <sstream>
+#include <string>
 
 // #include "Post.hpp"
 using namespace std;
@@ -205,4 +206,9 @@ int Network<T>::removeIfContains(const string& phrase_sensitive){
         else iterator = iterator->getNext();
     }
     return numberOfRemoved;
+}
+
+template<class T>
+LinkedList<Post*> Network<T>::getFeed(){
+    return feed;
 }

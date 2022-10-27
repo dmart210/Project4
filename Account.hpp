@@ -89,5 +89,10 @@ class Account{
          * @return: the vector of all the following 
          */
         vector<string> viewFollowing() const;
+
+        void updatePost(Post* post_ptr, const string& new_title,const string& new_body);
+
+        bool removePost(Post* post_ptr);
+
 };
 #endif

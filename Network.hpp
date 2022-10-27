@@ -85,6 +85,8 @@ class Network{
         bool addToFeed (const Post* post_added_to_feed);
 
         int removeIfContains(const string& phrase_sensitive);
+
+        LinkedList<Post*> getFeed();
 };
 //since its a template, the Network cpp is included at the bottom
 #include "Network.cpp"

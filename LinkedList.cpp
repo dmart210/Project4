@@ -1,10 +1,11 @@
+#include "LinkedList.hpp"
 #include <iostream>
 
 template<typename T>
 LinkedList<T>::LinkedList() : head_{nullptr}, size_{0} {}
 
 template<typename T>
-LinkedList<T>::LinkedList(const LinkedList &list) : head_{nullptr}, size_{0} {
+LinkedList<T>::LinkedList(const LinkedList<T>& list) : head_{nullptr}, size_{0} {
     if (!list.isEmpty()) {
         Node<T> *copyHead = list.getHeadPtr();
         int counter = 0;
@@ -101,7 +102,7 @@ bool LinkedList<T>::remove(const int&position) {
 }
 
 template <typename T>
-void LinkedList<T>::reverseCopy(LinkedList& a_list) {
+void LinkedList<T>::reverseCopy(const LinkedList<T> &a_list) {
     LinkedList<T> newList(a_list);
 
     Node<T> *current = newList.getHeadPtr();
@@ -198,17 +199,16 @@ bool LinkedList<T>::moveItem(int &current_position, int &new_position) {
 
 template<typename T>
 bool LinkedList<T>::moveItemToTop(const T& item){
-    if (getIndexOf(item) < 1) //If the item does not exist or it is already on top, return false
-        return false;
+    if (getIndexOf(item) < 1) return false; //If the item does not exist or it is already on top, return false
     else
-        {
+    {
         Node<T>* new_head = new Node<T>(); //Create a new head Node
         new_head->setItem(item); //Set the value of the new head Node to the item you want to move
         remove(getIndexOf(item)); //Remove the item you want to move from the List
         new_head->setNext(head_); //Set the new head pointer's next value to the current head pointer
         head_ = new_head; //Set the List's head to the new head pointer
         return true;
-        }
+    }
 }
 template<class T>
 void LinkedList<T>::displayList(){
