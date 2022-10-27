@@ -8,27 +8,31 @@
 #include "Network.hpp"
 #include "Node.hpp"
 #include "LinkedList.hpp"
-
+#include <cstring>
 using namespace std;
 
 int main(){
-    // Post* test = new General("title", "body", "username");
-    // test->displayPost();
-    // Post* test2 = new Promotional("title", "body", "username", "https://theuselessweb.com/");
-    // test2->displayPost();
-    // Account acc("username", "passworr");
-    // acc.addPost(test);
-    LinkedList<int>* test = new LinkedList<int>();
-    LinkedList<int> test2;
-    test2.insert(2,0);
-    test2.insert(3,1);
-    test2.insert(21,2);
+    vector<string> options;
+    for(int i =0 ;i < 5; i++)options.push_back(to_string(i));
+    LinkedList<Post*> Llist;
+    Post* ptr1 = new General("gen_title","gen_body", "gen_username");
+    Post* ptr2 = new Promotional("pro_title","pro_body","pro_username", "https://theuselessweb.com/");
+    Post* ptr3 = new Poll("Poll_title","poll_question?", "poll_username",options);
+    Llist.insert(ptr1,0);
+    Llist.insert(ptr2,0);
+    Llist.insert(ptr3,0);
+    cout << Llist.getIndexOf(ptr1) << endl;
+    cout << Llist.getIndexOf(ptr2) << endl;
+    cout << Llist.getIndexOf(ptr3) << endl;
+    // Llist.moveItemToTop(ptr3);
+    // cout << Llist.getIndexOf(ptr3) << endl;
+    // cout << Llist.getIndexOf(ptr1) << endl;
+    // cout << Llist.getIndexOf(ptr2) << endl;
+    /*--------------------------------------------------------------------------------------------------------------*/
 
-    test->insert(1,0);
-    test->insert(3,1);
-    cout << "Size: " << test->getSize() << endl;
-    test->reverseCopy(test2);
-    cout << "Size: " << test->getSize() <<endl;
-    cout << test->getIndexOf(21) << endl;
-    test->displayList();
+    LinkedList<Post*> List2;
+    cout << "before size is: " << List2.getSize() << endl;
+    // List2.insert(ptr1,0);
+    List2.reverseCopy(Llist);
+    cout << "After size is: " << List2.getSize() << endl;
 }

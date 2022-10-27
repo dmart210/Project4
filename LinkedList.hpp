@@ -19,7 +19,7 @@ class LinkedList {
     public:
         /* Default constructor*/
         LinkedList();
-        LinkedList(LinkedList<T>& list);
+        LinkedList(const LinkedList& list);
 
 
         /* Destructor */
@@ -78,9 +78,11 @@ class LinkedList {
         **/
         int getIndexOf(const T &item) const;
 
-        void reverseCopy(LinkedList<T>& LinkList);
+        void reverseCopy(LinkedList& LinkList);
         
-        bool moveItemToTop(Node<T>*& move_to_top);
+        bool moveItemToTop(const T& move_to_top);
+        bool moveItem(int &current_position, int &new_position);
+        void reverseCopy(const LinkedList &a_list);
 
 
 

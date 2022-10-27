@@ -66,7 +66,7 @@ void Account::getTimeStamp() const{
  */
 
 bool Account::addPost(const Post* post){
-    
+
     return true;
 }
 

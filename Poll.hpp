@@ -1,4 +1,3 @@
-//Poll.hpp
 #include <iostream>
 #include "Post.hpp"
 #include <vector>
@@ -14,13 +13,13 @@ class Poll : public Post{
         vector<int> number_of_votes_inside;
         time_t current_time;
     public:
-        Poll(string _title, string _question, string _username, vector<int>options) : Post (_title, _question, _username){
+        Poll(string _title, string _question, string _username, vector<string>options) : Post (_title, _question, _username){
             Post::setTitle(_title);
             Post::setBody(_question);
             Post::setUsername(_username);
             time(&current_time);
             for (int i = 0; i < options.size(); i++){
-                poll_options.push_back(to_string(options[i]));
+                poll_options.push_back(options[i]);
                 number_of_votes_inside.push_back(0);
             }
         }

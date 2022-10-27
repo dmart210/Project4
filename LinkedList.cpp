@@ -1,72 +1,49 @@
-/*
-List class implementation for term projects
-CSCI 235 Fall 2022
-Hunter College
-*/
-
-
 #include <iostream>
 
-/* Default constructor*/
-template<class T>
+template<typename T>
 LinkedList<T>::LinkedList() : head_{nullptr}, size_{0} {}
 
-/*Parameterized Constructor*/
-template<class T>
-LinkedList<T>::LinkedList(LinkedList<T>& list){
-    this->size_ = list->getSize();
-    this->head_ = list->getHeadPtr();
+template<typename T>
+LinkedList<T>::LinkedList(const LinkedList &list) : head_{nullptr}, size_{0} {
+    if (!list.isEmpty()) {
+        Node<T> *copyHead = list.getHeadPtr();
+        int counter = 0;
+
+        while (counter < list.getSize()) {
+            insert(copyHead->getItem(), counter);
+            counter++;
+            copyHead = copyHead->getNext();
+        }
+    }
 }
 
-/* Destructor */
-template<class T>
-LinkedList<T>::~LinkedList() {
-    clear();
-}
-
-
-
-/* @return  : the head pointer
-This function is for grading purposes*/
-template<class T>
+template<typename T>
 Node<T>* LinkedList<T>::getHeadPtr() const {
     return head_;
 }
 
 
-
-
-/*
-    @post   : removes all items from the caller list
-**/
-template<class T>
+template<typename T>
 void LinkedList<T>::clear() {
-
     Node<T>* curr_item = head_;
-    while(curr_item != nullptr) {
-        Node<T>* temp = curr_item;
+    Node<T>* temp = curr_item;
+    for(int i = 0; i<size_; i++) {
+        temp = curr_item;
         curr_item = curr_item->getNext();
-        // delete temp->getItem();
-        // temp->setItem(NULL);
-        // temp->setNext(nullptr);
         delete temp;
-        temp = nullptr;
     }
-
+    temp = nullptr;
+    size_ = 0;
 }
 
 
 
-/*
-    @param  item: the item to insert in the list
-    @param  position: the position where to inserted
-    @pre position is a valid place within the list, otherwise false will be returned
-    @return   :  true if the item has been inserted in the caller list,
-                false otherwise
-    @post     : Inserts item in  list at  position
+template<typename T>
+LinkedList<T>::~LinkedList() {
+    clear();
+}
 
-**/
-template<class T>
+template<typename T>
 bool LinkedList<T>::insert(const T& item, const int &position){
     if((position < 0 || position > size_)){
         return false;
@@ -100,17 +77,7 @@ bool LinkedList<T>::insert(const T& item, const int &position){
     return true;
 }
 
-
-
-
-/*
-    @param  position:  the position where to remove
-    @pre position is a valid place within the list, otherwise false will be returned
-    @pre      : returns true if the item at position has been removed from the list,
-                false otherwise
-    @post     : removes node at  position
-**/
-template <class T>
+template <typename T>
 bool LinkedList<T>::remove(const int&position) {
     if (position < 0 || position >= size_) {
         return false;
@@ -128,19 +95,34 @@ bool LinkedList<T>::remove(const int&position) {
         iterator = iterator->getNext();
     }
 
+    size_--;
     return true;
 
 }
 
+template <typename T>
+void LinkedList<T>::reverseCopy(LinkedList& a_list) {
+    LinkedList<T> newList(a_list);
 
+    Node<T> *current = newList.getHeadPtr();
+    // Node<T> *prev = nullptr;
+    // Node<T> *next = nullptr;
+    const int START = 0;
+    const int END = newList.getSize();
 
-/*
-    @param   item : the item to find in the list
-    @pre      : takes item object and checks if exist in list and return
-    @return   : returns the position (index) of object in the list
+    while (current != nullptr){
+        insert(current->getItem(), START);
+        current = current->getNext();
+        remove(END);
+        // next = current->getNext();
+        // current->setNext(prev);
+        // prev = current;
+        // current = next;
+    }
+    // head_ = prev;
+}
 
-**/
-template<class T>
+template<typename T>
 int LinkedList<T>::getIndexOf(const T &item) const {
     Node<T>* curr_item = head_;
     int counter = 0;
@@ -154,36 +136,7 @@ int LinkedList<T>::getIndexOf(const T &item) const {
     return -1;
 }
 
-
-
-
-/* @return  : the size of the list */
-template<class T>
-int LinkedList<T>::getSize() const {
-    return size_;
-}
-
-
-  /* @return  : true if the list is empty, false otherwise */
-template<class T>
-bool LinkedList<T>::isEmpty() const {
-    return size_ == 0 ? true : false;
-}
-
-template<class T>
-bool LinkedList<T>::moveItemToTop(Node<T>*& move_to_top){
-    return true; 
-}
-
-
-// PRIVATE METHODS
-
-/*
-    @param   pos : the position of the item
-    @pre     : pos is a valid place in the list
-    @return  : a pointer to the node at pos, if pos is invalid, returns nullptr
-**/
-template<class T>
+template<typename T>
 Node<T>* LinkedList<T>::getAtPos(const int &pos) const {
 
     if(pos < 0 || pos >= size_) {
@@ -199,6 +152,64 @@ Node<T>* LinkedList<T>::getAtPos(const int &pos) const {
     return curr_item;
 }
 
+template<typename T>
+int LinkedList<T>::getSize() const {
+    return size_;
+}
+
+template<typename T>
+bool LinkedList<T>::isEmpty() const {
+    return size_ == 0 ? true : false;
+}
+
+template <typename T>
+bool LinkedList<T>::moveItem(int &current_position, int &new_position) {
+    if(
+        (current_position > -1 && current_position < size_) &&
+        (new_position > -1 && new_position < size_)
+    ) {
+        if(new_position != current_position) {
+            if(new_position < current_position) {
+                T temp = this->getAtPos(current_position)->getItem();
+                this->getAtPos(current_position)->setItem(this->getAtPos(current_position - 1)->getItem());
+                this->getAtPos(current_position - 1)->setItem(temp);
+                current_position--;
+            }
+            else {
+                T temp = this->getAtPos(current_position)->getItem();
+                this->getAtPos(current_position)->setItem(this->getAtPos(current_position + 1)->getItem());
+                this->getAtPos(current_position + 1)->setItem(temp);
+                current_position++;
+            }
+
+            return moveItem(current_position, new_position);
+        }
+        else {
+            return true;
+        }
+    }
+    else {
+        return false;
+    }
+}
+
+
+
+
+template<typename T>
+bool LinkedList<T>::moveItemToTop(const T& item){
+    if (getIndexOf(item) < 1) //If the item does not exist or it is already on top, return false
+        return false;
+    else
+        {
+        Node<T>* new_head = new Node<T>(); //Create a new head Node
+        new_head->setItem(item); //Set the value of the new head Node to the item you want to move
+        remove(getIndexOf(item)); //Remove the item you want to move from the List
+        new_head->setNext(head_); //Set the new head pointer's next value to the current head pointer
+        head_ = new_head; //Set the List's head to the new head pointer
+        return true;
+        }
+}
 template<class T>
 void LinkedList<T>::displayList(){
     while (head_ != nullptr){
@@ -206,19 +217,4 @@ void LinkedList<T>::displayList(){
         head_ = head_->getNext();
     }
     std::cout << endl;
-}
-
-template<class T>
-void LinkedList<T>::reverseCopy(LinkedList<T>& linked_being_reversed){
-    clear();
-    remove(1);
-    remove(3);
-    size_t counter = 0;
-    Node<T>* head_ptr = linked_being_reversed.getHeadPtr();
-    while(head_ptr != nullptr){
-        cout << "ok" << endl;
-        insert(head_ptr->getItem(),counter);
-        head_ptr = head_ptr->getNext();
-        counter++;
-    }
 }
