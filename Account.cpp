@@ -65,11 +65,15 @@ void Account::getTimeStamp() const{
  * @return: Returns true otherwise and creates a post and adds it to the string vector
  */
 
-bool Account::addPost(Post* post){
-    if (post->getTitle() == "" || post->getBody() == "") return false;
-    else if(all_posts.insert(post,0)) account_in_network->addToFeed(post);
-    return true;
+bool Account::addPost(const Post* post) {
+    Post* post1 = const_cast<Post *>(post);
+    if (post1->getTitle() == "" || post1->getBody() == "") return false;
+    else if (all_posts.insert(post1, 0)) {
+        account_in_network->addToFeed(post);
+        return true;
+    }
 }
+
 
 /**
  * @note: A for loop that prints out the posts in the accounts
@@ -108,27 +112,23 @@ vector<string> Account::viewFollowing() const{
     return usernames_of_following;
 }
 
-void Account::updatePost(Post* post_ptr,const string& new_title,const  string& new_body){
-    Post* new_ptr = post_ptr;
-    new_ptr->setBody(new_body);
+void Account::updatePost(const Post* post_ptr,const string& new_title,const  string& new_body){
+    Post* new_ptr = const_cast<Post *>(post_ptr);
     new_ptr->setTitle(new_title);
-    all_posts.remove(all_posts.getIndexOf(post_ptr));
-    LinkedList<Post*> new_list = account_in_network->getFeed();
-    new_list.remove(new_list.getIndexOf(post_ptr));
-    all_posts.insert(new_ptr,0);
-}   
-
-bool Account::removePost(Post* post_ptr){
-    LinkedList<Post*> new_list = account_in_network->getFeed();
+    new_ptr->setBody(new_body);
     Node<Post*>* iterator;
     iterator = all_posts.getHeadPtr();
     while (iterator != nullptr){
         if (iterator->getItem() == post_ptr){
-            all_posts.remove(all_posts.getIndexOf(post_ptr));
-            new_list.remove(new_list.getIndexOf(post_ptr));
-            return true;
+            all_posts.remove(all_posts.getIndexOf(iterator->getItem()));
+            all_posts.insert(new_ptr,0);
         }
-        else iterator = iterator->getNext();
+        iterator = iterator->getNext();
+
     }
-    return false;
+}   
+
+bool Account::removePost(Post* post_ptr){
+    all_posts.remove(all_posts.getIndexOf(post_ptr));
+    return true;
 }

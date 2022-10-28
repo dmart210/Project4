@@ -1,6 +1,6 @@
 //Promotional.cpp
 #include <iostream>
-#include <time.h>
+#include <ctime>
 #include <regex>
 #include "Promotional.hpp"
 using namespace std;
@@ -12,15 +12,22 @@ using namespace std;
 string Promotional::getLink()const {
     return url;
 }
+
+Promotional::Promotional( std::string _title,  std::string _body,  std::string _username,  std::string link) :Post(_title,_body,_username){
+    setLink(link);
+    time(&current_time);
+}
 /***
  * @param: string reference that gets the link the user provided
  */
-bool Promotional::setLink(string& _link){
+bool Promotional::setLink(const string& _link){
     //using regex to look for the https: and to make sure the end has at least 2 characters
     regex end ("[a-z][.][a-z][a-z]");
     regex front("https:");
+    string broke = "Broken Link";
     //_link becomes broken link if its not right
-    if (!regex_search(_link,front) || !regex_search(_link,end)) _link = "Broken Link";
+    if (!regex_search(_link,front) || !regex_search(_link,end))
+        setLink(broke);
     //else set the url to the link
     else url = _link;
     return true;

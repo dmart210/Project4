@@ -20,7 +20,7 @@ class Account{
         string password; //password of account
         LinkedList<Post*> all_posts; //all__posts contained in Account 
         time_t current_time; // time_t object that gets the time
-        Network<Account>* account_in_network;//pointer to the network 
+        Network<Account>* account_in_network;//pointer to the network
         vector<string> usernames_of_following; //vector of all usernames the Account follows
     public:
         /**
@@ -75,7 +75,7 @@ class Account{
          * @param: two const reference which are the title and body of the post thats going to be created
          * @post: it will add the post to the all_posts vector, and as well add it to the network feed if the account is in the feed 
          */
-        bool addPost(Post* post); // didnt pass
+        bool addPost(const Post* post); // didnt pass
         /**
          * @post: view all the posts in the Account
          */
@@ -90,9 +90,8 @@ class Account{
          */
         vector<string> viewFollowing() const;
 
-        void updatePost(Post* post_ptr, const string& new_title,const string& new_body);
+        void updatePost(const Post* post_ptr, const string& new_title,const string& new_body);
 
         bool removePost(Post* post_ptr);
-
 };
 #endif

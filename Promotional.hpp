@@ -11,15 +11,9 @@ class Promotional:public Post{
         string url;
         time_t current_time;
     public:
-        Promotional (string _title, string _body, string _username, string link) : Post (_title, _body, _username){
-            Post::setTitle(_title);
-            Post::setBody(_body);
-            Post::setUsername(_username);
-            url = link;
-            time(&current_time);
-        }
+        Promotional (const string _title,const string _body, const string _username, const string link);
         string getLink()const;
-        bool setLink(string& _link);
+        bool setLink(const string& _link);
         void displayPost() override;
 
 };

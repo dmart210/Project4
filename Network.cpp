@@ -144,7 +144,15 @@ Network<T>& Network<T>::operator-=(const Network<T>& another_net){
  * @param: const reference of the Account that is going to be displayeed
  */
 template<class T>
-void Network<T>::printFeedForAccount(const T& account_being_displayed){
+void Network<T>::printFeedForAccount(T& account_being_displayed){
+    T* acc = &account_being_displayed;
+    Node<Post*>* iterator = feed.getHeadPtr();
+    while(iterator != nullptr) {
+        if (containsAccount(acc) && iterator != nullptr){
+            iterator->getItem()->displayPost();
+        }
+        iterator = iterator->getNext();
+    }
 }
 /**
  * @param: const reference of an Account and the username that the Account would like to follow
@@ -152,6 +160,7 @@ void Network<T>::printFeedForAccount(const T& account_being_displayed){
  */
 template<class T>
 bool Network<T>::authenticateFollow(T& _account, const string username){
+
     return false;
 }
 /**
@@ -160,6 +169,8 @@ bool Network<T>::authenticateFollow(T& _account, const string username){
  */
 template<class T>
 bool Network<T>::addToFeed(const Post* account_post){
+    Post* post_ptr = const_cast<Post *>(account_post);
+    feed.insert(post_ptr,0);
     return true;
 }
 /**
@@ -211,4 +222,9 @@ int Network<T>::removeIfContains(const string& phrase_sensitive){
 template<class T>
 LinkedList<Post*> Network<T>::getFeed(){
     return feed;
+}
+
+template<class T>
+void Network<T>::setFeed(LinkedList<Post *> list) {
+     feed = list;
 }

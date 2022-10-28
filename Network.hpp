@@ -71,14 +71,14 @@ class Network{
          * @param: const reference of account being displayed
          * @post: prints out the feed of the accounts
          */
-        void printFeedForAccount(const T& account_being_displayed);
+        void printFeedForAccount( T& account_being_displayed);
         /**
          * @param: const reference of an Account and the username that the Account would like to follow
          * @return: true if the Account was able to follow said username
          */
         bool authenticateFollow (T& _account, const string username);
         /**
-         * @param: refernence to the Post being added to the deed
+         * @param: reference to the Post being added to the feed
          * @return: returns true if it was able to addToFeed
          * 
          */
@@ -87,6 +87,7 @@ class Network{
         int removeIfContains(const string& phrase_sensitive);
 
         LinkedList<Post*> getFeed();
+        void setFeed(LinkedList<Post*> list);
 };
 //since its a template, the Network cpp is included at the bottom
 #include "Network.cpp"
