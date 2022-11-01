@@ -20,7 +20,7 @@ template <class T>
 class Network{
     private:
         static const int DEFAULT_CAPACITY = 200; //default capacity of how many items can be in a network
-        const T* temp_items[DEFAULT_CAPACITY]; // temp_items being the amount of accounts in the network. Which are all pointers to the Accounts
+        T* temp_items[DEFAULT_CAPACITY]; // temp_items being the amount of accounts in the network. Which are all pointers to the Accounts
         int item_count; //keep count of the amount of items being removed or added to the network
         LinkedList<Post*> feed; //feed of the accounts post
         int getIndexOf(const T* _username); // private method that gets the index of where in the temp_items the _username is found if it is there.
@@ -41,12 +41,12 @@ class Network{
         /**
          * @return: returns true if item was able to be added
          */
-        bool addAccount(const T* item_being_added); //works
+        bool addAccount(T* item_being_added); //works
         /**
          * @param: const pointer to the item being removed
          * @return: returns true if it was able to remove Account
          */
-        bool removeAccount(const T* item_being_removed); //works
+        bool removeAccount(T* item_being_removed); //works
         /**
          * @post: clears the size of the network 
          * 
@@ -71,7 +71,7 @@ class Network{
          * @param: const reference of account being displayed
          * @post: prints out the feed of the accounts
          */
-        void printFeedForAccount( T& account_being_displayed);
+        void printFeedForAccount( T* account_being_displayed);
         /**
          * @param: const reference of an Account and the username that the Account would like to follow
          * @return: true if the Account was able to follow said username

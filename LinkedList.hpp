@@ -84,7 +84,6 @@ class LinkedList {
         bool moveItem(int &current_position, int &new_position);
 
 
-
     private:
         /*
             @param   pos : the position of the item

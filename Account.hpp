@@ -41,7 +41,8 @@ class Account{
         Account(string _username, string _password){
             username = _username;
             password = _password;
-            
+            time(&current_time);
+            account_in_network = nullptr;
         }
         /**
          * @return: return the username of Account
@@ -75,7 +76,7 @@ class Account{
          * @param: two const reference which are the title and body of the post thats going to be created
          * @post: it will add the post to the all_posts vector, and as well add it to the network feed if the account is in the feed 
          */
-        bool addPost(const Post* post); // didnt pass
+        bool addPost( Post* post); // didnt pass
         /**
          * @post: view all the posts in the Account
          */
@@ -93,5 +94,7 @@ class Account{
         void updatePost(const Post* post_ptr, const string& new_title,const string& new_body);
 
         bool removePost(Post* post_ptr);
+        LinkedList<Post*> getPost();
+        void setPost(LinkedList<Post*> list);
 };
 #endif

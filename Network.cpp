@@ -46,7 +46,7 @@ bool Network<T>::isEmpty() const{
  * @return: returns true if if it was able to add the Account to the Network, false otherwise
  */
 template<class T>
-bool Network<T>::addAccount(const T* item_being_added){
+bool Network<T>::addAccount( T* item_being_added){
     bool username_duplicates = false;
     for (int i = 0; i < item_count; i++){
         if (getIndexOf(item_being_added) == getIndexOf(temp_items[i])) username_duplicates = true;
@@ -66,7 +66,7 @@ bool Network<T>::addAccount(const T* item_being_added){
  * @return: returns true if the network was able to remove the Account(item)
  */
 template<class T>
-bool Network<T>::removeAccount(const T* item_being_removed){
+bool Network<T>::removeAccount(T* item_being_removed){
     int found_index = getIndexOf(item_being_removed);
     bool can_remove = !isEmpty() && (found_index > -1);
     if (can_remove){
@@ -144,8 +144,8 @@ Network<T>& Network<T>::operator-=(const Network<T>& another_net){
  * @param: const reference of the Account that is going to be displayeed
  */
 template<class T>
-void Network<T>::printFeedForAccount(T& account_being_displayed){
-    T* acc = &account_being_displayed;
+void Network<T>::printFeedForAccount(T* account_being_displayed){
+    T* acc = account_being_displayed;
     Node<Post*>* iterator = feed.getHeadPtr();
     while(iterator != nullptr) {
         if (containsAccount(acc) && iterator != nullptr){
@@ -194,31 +194,36 @@ int Network<T>::getIndexOf(const T* _username){
 
 template<class T>
 int Network<T>::removeIfContains(const string& phrase_sensitive){
-
 //    /*traverse through the Posts
 //        if in the post, it contains the phrase,
-//        then remove that Post from the feed
+//        then remove that Post from the feed as well from the Account
 //    */
-//    int counter = 0;
-//   int numberOfRemoved = 0;
-//   Node<Post*>* iterator;
-//   iterator = feed.getHeadPtr();
-//   while(iterator != nullptr){
-//        Post* ptr = iterator->getItem();
-//        string title = ptr->getTitle();
-//        string body = ptr->getBody();
-//        bool foundTitle = title.find(phrase_sensitive) != std::string::npos;
-//        bool foundBody = body.find(phrase_sensitive) != std::string::npos;
-//        if (foundBody == true || foundTitle == true){
-//            feed.remove(counter);
-//            numberOfRemoved++;
-//            counter++;
-//            temp_items[getIndexOf(ptr->getUsername())].removePost(ptr);
-//        }
-//        iterator = iterator->getNext();
-//    }
-//    return numberOfRemoved;
-    return -1;
+    int numberOfRemovedAccount = 0;
+    int numberOfRemovedFeed = 0;
+    for (int i = 0; i < getSizeOfNetwork(); i++){
+        T* account = temp_items[i];
+        LinkedList<Post*> new_list = account->getPost();
+        Node<Post*>* all_post_iterator = new_list.getHeadPtr();
+        while (all_post_iterator != nullptr){
+            Post* post_ptr = all_post_iterator->getItem();
+            if (post_ptr->getTitle().find(phrase_sensitive) != std::string::npos || post_ptr->getBody().find(phrase_sensitive) != std::string::npos) {
+                new_list.remove(new_list.getIndexOf(post_ptr));
+                numberOfRemovedAccount++;
+            }
+            all_post_iterator = all_post_iterator->getNext();
+        }
+    }
+    Node<Post*>* feed_iterator = feed.getHeadPtr();
+    while (feed_iterator != nullptr){
+        Post* item_ptr = feed_iterator->getItem();
+        if(item_ptr->getTitle().find(phrase_sensitive) != std::string::npos || item_ptr->getBody().find(phrase_sensitive) != std::string::npos){
+            feed.remove(feed.getIndexOf(item_ptr));
+            numberOfRemovedFeed++;
+        }
+        feed_iterator = feed_iterator->getNext();
+    }
+    int numberOfRemoved = numberOfRemovedAccount + numberOfRemovedFeed;
+    return (numberOfRemoved/2);
 }
 
 template<class T>

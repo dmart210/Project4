@@ -65,14 +65,12 @@ void Account::getTimeStamp() const{
  * @return: Returns true otherwise and creates a post and adds it to the string vector
  */
 
-bool Account::addPost(const Post* post) {
-    Post* post1 = const_cast<Post *>(post);
-    if (post1->getTitle() == "" || post1->getBody() == "") return false;
-    else{
-        all_posts.insert(post1,0);
-        account_in_network->addToFeed(post1);
-        return true;
-    }
+bool Account::addPost(Post* post) {
+    all_posts.insert(post,0);
+    account_in_network->addToFeed(post);
+    cout << this->account_in_network << endl;
+    return true;
+
 }
 
 
@@ -113,23 +111,41 @@ vector<string> Account::viewFollowing() const{
     return usernames_of_following;
 }
 
-void Account::updatePost(const Post* post_ptr,const string& new_title,const  string& new_body){
-    Post* new_ptr = const_cast<Post *>(post_ptr);
+void Account::updatePost(const Post* post_ptr,const string& new_title,const  string& new_body) {
+    Post *new_ptr = const_cast<Post *>(post_ptr);
+    LinkedList<Post *> linkedFeed = account_in_network->getFeed();
     new_ptr->setTitle(new_title);
     new_ptr->setBody(new_body);
-    Node<Post*>* iterator;
+    Node<Post *> *iterator;
+    Node<Post *> *feed_iterator;
     iterator = all_posts.getHeadPtr();
-    while (iterator != nullptr){
-        if (iterator->getItem() == post_ptr){
+    feed_iterator = linkedFeed.getHeadPtr();
+    while (iterator != nullptr) {
+        if (iterator->getItem() == post_ptr) {
             all_posts.remove(all_posts.getIndexOf(iterator->getItem()));
-            all_posts.insert(new_ptr,0);
+            all_posts.insert(new_ptr, 0);
         }
         iterator = iterator->getNext();
-
     }
-}   
+    while (feed_iterator != nullptr){
+        if(feed_iterator->getItem() == post_ptr){
+            linkedFeed.remove(linkedFeed.getIndexOf(feed_iterator->getItem()));
+            linkedFeed.insert(new_ptr,0);
+        }
+        feed_iterator = feed_iterator->getNext();
+    }
+    account_in_network->setFeed(linkedFeed);
+}
 
 bool Account::removePost(Post* post_ptr){
     all_posts.remove(all_posts.getIndexOf(post_ptr));
     return true;
+}
+
+LinkedList<Post*> Account::getPost() {
+    return all_posts;
+}
+
+void Account::setPost(LinkedList<Post *> list) {
+    all_posts = list;
 }
