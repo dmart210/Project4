@@ -19,5 +19,6 @@ class General: public Post{
             for (int i = 0; i<= 5; i++){
                 react[i] = 0;
             }
+            time(&current_time);
         }
 };

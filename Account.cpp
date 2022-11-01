@@ -68,8 +68,9 @@ void Account::getTimeStamp() const{
 bool Account::addPost(const Post* post) {
     Post* post1 = const_cast<Post *>(post);
     if (post1->getTitle() == "" || post1->getBody() == "") return false;
-    else if (all_posts.insert(post1, 0)) {
-        account_in_network->addToFeed(post);
+    else{
+        all_posts.insert(post1,0);
+        account_in_network->addToFeed(post1);
         return true;
     }
 }

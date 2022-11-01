@@ -10,7 +10,7 @@
 #define NETWORK_H
 #include "Post.hpp"
 #include "LinkedList.hpp"
-
+#include "Account.hpp"
 #include <iostream>
 #include <vector>
 #include<string>
@@ -82,7 +82,7 @@ class Network{
          * @return: returns true if it was able to addToFeed
          * 
          */
-        bool addToFeed (const Post* post_added_to_feed);
+        bool addToFeed (Post* post_added_to_feed);
 
         int removeIfContains(const string& phrase_sensitive);
 

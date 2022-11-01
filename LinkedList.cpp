@@ -102,12 +102,10 @@ bool LinkedList<T>::remove(const int&position) {
 }
 
 template <typename T>
-void LinkedList<T>::reverseCopy(const LinkedList<T> &a_list) {
+void LinkedList<T>::reverseCopy(const LinkedList &a_list) {
     LinkedList<T> newList(a_list);
 
     Node<T> *current = newList.getHeadPtr();
-    // Node<T> *prev = nullptr;
-    // Node<T> *next = nullptr;
     const int START = 0;
     const int END = newList.getSize();
 
@@ -115,12 +113,7 @@ void LinkedList<T>::reverseCopy(const LinkedList<T> &a_list) {
         insert(current->getItem(), START);
         current = current->getNext();
         remove(END);
-        // next = current->getNext();
-        // current->setNext(prev);
-        // prev = current;
-        // current = next;
     }
-    // head_ = prev;
 }
 
 template<typename T>

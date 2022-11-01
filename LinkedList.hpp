@@ -78,11 +78,10 @@ class LinkedList {
         **/
         int getIndexOf(const T &item) const;
 
-        void reverseCopy(LinkedList& LinkList);
+        void reverseCopy(const LinkedList& LinkList);
         
         bool moveItemToTop(const T& move_to_top);
         bool moveItem(int &current_position, int &new_position);
-        void reverseCopy(const LinkedList &a_list);
 
 
 
