@@ -68,7 +68,6 @@ void Account::getTimeStamp() const{
 bool Account::addPost(Post* post) {
     all_posts.insert(post,0);
     account_in_network->addToFeed(post);
-    cout << this->account_in_network << endl;
     return true;
 
 }
@@ -127,14 +126,14 @@ void Account::updatePost(const Post* post_ptr,const string& new_title,const  str
         }
         iterator = iterator->getNext();
     }
-    while (feed_iterator != nullptr){
-        if(feed_iterator->getItem() == post_ptr){
-            linkedFeed.remove(linkedFeed.getIndexOf(feed_iterator->getItem()));
-            linkedFeed.insert(new_ptr,0);
-        }
-        feed_iterator = feed_iterator->getNext();
-    }
-    account_in_network->setFeed(linkedFeed);
+//    while (feed_iterator != nullptr){
+//        if(feed_iterator->getItem() == post_ptr){
+//            linkedFeed.remove(linkedFeed.getIndexOf(feed_iterator->getItem()));
+//            linkedFeed.insert(new_ptr,0);
+//        }
+//        feed_iterator = feed_iterator->getNext();
+//    }
+//    account_in_network->setFeed(linkedFeed);
 }
 
 bool Account::removePost(Post* post_ptr){

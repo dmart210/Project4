@@ -79,7 +79,7 @@ class Network{
         bool authenticateFollow (T& _account, const string username);
         /**
          * @param: reference to the Post being added to the feed
-         * @return: returns true if it was able to addToFeed
+         * @return: returns true if it was arble to addToFeed
          * 
          */
         bool addToFeed (Post* post_added_to_feed);
